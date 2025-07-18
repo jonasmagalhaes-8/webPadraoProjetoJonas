@@ -14,4 +14,7 @@ async function criarPessoa(form) {
 
     return await salvarPessoa(new Pessoa({ nome, idade }));
 }
-window.criarPessoa = criarPessoa; // <-- expõe globalmente
+window.pessoaController = {
+    criarPessoa
+};
+

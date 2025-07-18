@@ -44,7 +44,7 @@
             const form = event.target;
 
             try {
-                const { pessoa, response } = await window.criarPessoa(form);
+                const { pessoa, response } = await window.pessoaController.criarPessoa(form);
 
                 iziToast.success({
                     title: 'Sucesso',
