@@ -1,20 +1,17 @@
 import { salvarPessoa } from '../services/PessoaService.js';
 import { Pessoa } from '../models/Pessoa.js';
 
-async function criarPessoa(form) {
-    const nome = form.nome.value;
-    const idade = Number(form.idade.value);
-
-    /*if (!nome || nome.trim() === '') {
-        throw new Error('Nome é obrigatório');
+function formToJson(form) {
+    if (form.idade !== undefined) {
+        form.idade = Number(form.idade);
     }
-    if (!idade || isNaN(idade) || idade <= 0) {
-        throw new Error('Idade deve ser número positivo');
-    }*/
-
-    return await salvarPessoa(new Pessoa({ nome, idade }));
+    return form;
 }
+
+async function criarPessoa(form) {
+    return await salvarPessoa(new Pessoa(formToJson(form)));
+}
+
 window.pessoaController = {
     criarPessoa
 };
-
