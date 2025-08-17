@@ -12,8 +12,8 @@
 
     <!-- iziToast JS -->
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
-
     <script type="module" src="js/controllers/PessoaController.js"></script>
+    <script type="module" src="componentes/pessoaItemListagem/pessoaItemListagem.js"></script>
 </head>
 
 <body>
@@ -24,21 +24,10 @@
         <button type="submit">Enviar</button>
     </form>
 
-    <template id="accordion-template">
-        <details>
-            <summary>
-                <div class="nome-idade"></div>
-                <div class="marker">▶</div>
-                <button type="button" class="btn-remove" title="Remover"
-                    style="margin-left: auto; cursor: pointer;">✖</button>
-            </summary>
-            <div class="detalhes"></div>
-        </details>
-    </template>
-
-    <div id="container"></div>
+    <div id="listaPessoas"></div>
 
     <script>
+
         async function enviarForm(event) {
             event.preventDefault();
             const form = event.target;
@@ -52,29 +41,7 @@
                     position: 'topRight'
                 });
 
-                const container = document.getElementById('container');
-                const template = document.getElementById('accordion-template');
-
-                const clone = template.content.cloneNode(true);
-                const details = clone.querySelector('details');
-
-                clone.querySelector('.nome-idade').textContent = `${pessoa.nome} (${pessoa.idade} anos)`;
-                clone.querySelector('.detalhes').textContent = `Detalhes:\n- Nome: ${pessoa.nome}\n- Idade: ${pessoa.idade}`;
-
-                // Botão remover
-                const btnRemove = clone.querySelector('.btn-remove');
-                btnRemove.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    details.remove();
-                });
-
-                details.addEventListener('toggle', () => {
-                    if (details.open) {
-                        console.log('Pessoa selecionada:', pessoa);
-                    }
-                });
-
-                container.appendChild(clone);
+                document.getElementById('listaPessoas').appendChild(await window.componenteListaPessoas.criar(pessoa));
 
                 form.reset();
 
